@@ -7,15 +7,15 @@
     if(isset($_POST["dataFormatExcel"]) && isset($_POST["totalesCtrl"])){
         $dataFormatExcel = $_POST["dataFormatExcel"];
         $totalesCtrl     = $_POST["totalesCtrl"];
-        $mesReporte      = "05";
-        $anioReporte     = "2018";
+        $mesReporte      = $_POST["mesReporte"];
+        $anioReporte     = $_POST["anioReporte"];
         //$valoresAsociado   = $dataFormatExcel[0];
         $values     = "";
         $success    = false;
         //Establecer la información local en castellano de España
-        setlocale(LC_TIME,"es_ES");
-        //$fechaRegistro = strftime("%A-%B-%Y %H:%M");
-        $fechaRegistro   = "2018-05-11 00:00:00";
+        date_default_timezone_set('America/Bogota');
+        $fechaRegistro = date("Y-m-d h:i:sa");
+        //$fechaRegistro   = "2018-05-11 00:00:00";
         foreach($dataFormatExcel as $valorAsociado){
             $nombres            = $valorAsociado['nombres'];
             $predioNo           = $valorAsociado['predioNo'];

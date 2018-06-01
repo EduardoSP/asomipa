@@ -739,7 +739,11 @@ $(document).ready(function() {
 //--------------------------End paint table
     //send data to PHP
     function senDataPhp(dataFormatExcel, totalesCtrl){
-      dataSend = {"dataFormatExcel":dataFormatExcel, "totalesCtrl": totalesCtrl};
+      var mesReporte	= $('#month').val();
+      var anioReporte	= $('#year').val();
+      alert (mesReporte);
+      dataSend = {"dataFormatExcel":dataFormatExcel, "totalesCtrl": totalesCtrl,
+                  "mesReporte": mesReporte, "anioReporte": anioReporte };
       var request = $.ajax({
           type: "POST",
           url		: "../phpCode/loadDataFile.php",
