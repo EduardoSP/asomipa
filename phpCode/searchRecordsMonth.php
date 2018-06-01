@@ -35,7 +35,7 @@
                 array_push($arrayResponse, $responseJson);
             }
         } else {
-            $message = "0 results";
+            $message = "0";
         }
         $datos = array(
             'success' => true,

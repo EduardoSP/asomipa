@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $( "#divTable" ).hide();
+    $( "#formFile" ).hide();
     //Begin date
         var d = new Date();
         var month = d.getMonth()+1;
@@ -129,8 +130,9 @@ $(document).ready(function() {
          
     }     
   //--------------------------paint table
+  var table;
     function paintTable(data){
-        var table = $('#myTable').DataTable( {
+        table = $('#myTable').DataTable( {
             data: data,
             responsive: {
                 details: {
@@ -161,6 +163,7 @@ $(document).ready(function() {
     
         // Add event listener for opening and closing details
         $('#myTable tbody').on('click', 'td.details-control', function () {
+            console.log(table);
             var tr = $(this).closest('tr');
             var row = table.row( tr );
     
@@ -238,6 +241,11 @@ $(document).ready(function() {
             $( "#formFile" ).hide();
             //console.log(response);
             console.log(dataFormatExcel);
+            if(table !=null){
+              //destroys table and data of row when clic in the plus icon
+              table.destroy();
+              $("#myTable tbody").remove();   
+            }
             paintTable(dataFormatExcel);
           }else{
                    	
@@ -269,14 +277,21 @@ $(document).ready(function() {
         data	: dataSend,
         dataType: "json"
       });
-      var dataTable  = [];
     request.done(function(response){
-      console.log(response['data']);
-      console.log(response['data'][0]);
         if(response.success){
-          $( "#formFile" ).hide();
-          var obj = JSON.parse(response['data']);
-          paintTable(obj);
+          if(response.message !=0){
+            $( "#formFile" ).hide();
+            var responseDataDecodeJson = JSON.parse(response['data']);
+            if(table !=null){
+              //destroys table and data of row when clic in the plus icon
+              table.destroy();
+              $("#myTable tbody").remove();   
+            }
+            paintTable(responseDataDecodeJson);
+          }else{
+            $( "#divTable" ).hide();
+            $( "#formFile" ).show();
+          }
         }else{
           alert("Error al mostrar los datos");
         }
